@@ -34,7 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'title_en',
             'subtitle:ntext',
             'subtitle_en:ntext',
-            'color',
+            [
+                'attribute' => 'color',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::tag('div', '', [
+                        'style' => 'width: 20px; height: 20px; background-color: ' . $model->color . '; border: 1px solid #000;',
+                    ]);
+                },
+            ],
             [
                 'attribute' => 'image',
                 'format' => 'raw',
@@ -42,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->image ? Html::img('/' . $model->image, ['alt' => 'Изображение поста', 'style' => 'width: auto; height: auto']) : Yii::t('app', 'Нет изображения');
                 },
             ],
+
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, TeaCollections $model, $key, $index, $column) {
@@ -50,6 +59,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
 
 </div>

@@ -4,12 +4,12 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\TeaCollections;
+use common\models\Feedback;
 
 /**
- * TeaCollectionsSearch represents the model behind the search form of `common\models\CollectionController`.
+ * FeedbackSearch represents the model behind the search form of `common\models\Feedback`.
  */
-class TeaCollectionsSearch extends TeaCollections
+class FeedbackSearch extends Feedback
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class TeaCollectionsSearch extends TeaCollections
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['title', 'title_en', 'subtitle', 'subtitle_en', 'color', 'image'], 'safe'],
+            [['id', 'moderation_status'], 'integer'],
+            [['name', 'email', 'message', 'created_at', 'updated_at', 'comment'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class TeaCollectionsSearch extends TeaCollections
      */
     public function search($params)
     {
-        $query = TeaCollections::find();
+        $query = Feedback::find();
 
         // add conditions that should always apply here
 
@@ -59,14 +59,15 @@ class TeaCollectionsSearch extends TeaCollections
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'moderation_status' => $this->moderation_status,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'title_en', $this->title_en])
-            ->andFilterWhere(['like', 'subtitle', $this->subtitle])
-            ->andFilterWhere(['like', 'subtitle_en', $this->subtitle_en])
-            ->andFilterWhere(['like', 'color', $this->color])
-            ->andFilterWhere(['like', 'image', $this->image]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'message', $this->message])
+            ->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;
     }

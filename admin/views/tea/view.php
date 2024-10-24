@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Tea;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -30,13 +31,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'tea_collection_id',
+            [
+                'attribute' => 'tea_collection_id',
+                'label' => Yii::t('app', 'Коллекция чая'),
+                'value' => function (Tea $model) {
+                    return $model->getCategoryName();
+                }
+            ],
             'title',
             'title_en',
             'subtitle:ntext',
             'subtitle_en:ntext',
-            'description:ntext',
-            'description_en:ntext',
+            'description:html',
+            'description_en:html',
             [
                 'attribute' => 'background_image',
                 'format' => 'raw',
@@ -64,9 +71,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'brewing_temperature_en:ntext',
             'brewing_time:ntext',
             'brewing_time_en:ntext',
-            'buy_available',
-            'link:ntext',
-            'link_en:ntext',
+            [
+                'attribute' => 'buy_available',
+                'value' => function ($model) {
+                    return $model->buy_available ? 'Да' : 'Нет';
+                }
+            ],
+            [
+                'attribute' => 'link',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a($model->link, $model->link, ['target' => '_blank']);
+                },
+            ],
+            [
+                'attribute' => 'link_en',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a($model->link_en, $model->link_en, ['target' => '_blank']);
+                },
+            ],
             'priority',
         ],
     ]) ?>

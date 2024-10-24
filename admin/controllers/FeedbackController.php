@@ -2,17 +2,16 @@
 
 namespace admin\controllers;
 
-use common\models\Tea;
-use common\models\TeaSearch;
-use himiklab\sortablegrid\SortableGridAction;
+use common\models\Feedback;
+use common\models\FeedbackSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TeaController implements the CRUD actions for Tea model.
+ * FeedbackController implements the CRUD actions for Feedback model.
  */
-class TeaController extends Controller
+class FeedbackController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +32,13 @@ class TeaController extends Controller
     }
 
     /**
-     * Lists all Tea models.
+     * Lists all Feedback models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new TeaSearch();
+        $searchModel = new FeedbackSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +48,7 @@ class TeaController extends Controller
     }
 
     /**
-     * Displays a single Tea model.
+     * Displays a single Feedback model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -62,29 +61,7 @@ class TeaController extends Controller
     }
 
     /**
-     * Creates a new Tea model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Tea();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Tea model.
+     * Updates an existing Feedback model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -104,42 +81,18 @@ class TeaController extends Controller
     }
 
     /**
-     * Deletes an existing Tea model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Tea model based on its primary key value.
+     * Finds the Feedback model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Tea the loaded model
+     * @return Feedback the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tea::findOne(['id' => $id])) !== null) {
+        if (($model = Feedback::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-    public function actions()
-    {
-        return [
-            'sort' => [
-                'class' => SortableGridAction::class,
-                'modelName' => Tea::class,
-            ],
-        ];
     }
 }

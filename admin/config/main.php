@@ -44,9 +44,9 @@ return [
         'datecontrol' => [
             'class' => Module::class,
             'displaySettings' => [
-                Module::FORMAT_DATE => 'dd-MM-yyyy',
+                Module::FORMAT_DATE => 'php:d.m.Y',
                 Module::FORMAT_TIME => 'hh:mm:ss a',
-                Module::FORMAT_DATETIME => 'php:Y-m-d H-m-s',
+                Module::FORMAT_DATETIME => 'php:d.m.Y H-m-s',
             ],
             'saveSettings' => [
                 Module::FORMAT_DATE => 'php:U', // saves as unix timestamp
@@ -152,8 +152,8 @@ return [
             'decimalSeparator' => ',',
             'thousandSeparator' => ' ',
             'currencyCode' => 'RUB',
-            'dateFormat' => 'php: d/m/Y',
-            'datetimeFormat' => 'php: d/m/Y H:i',
+            'dateFormat' => 'php: d.m.Y',
+            'datetimeFormat' => 'php: d.m.Y H:i',
         ],
 
         'urlManager' => [

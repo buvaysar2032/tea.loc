@@ -65,6 +65,7 @@ class SiteController extends Controller
      */
     public function actionIndex(): string
     {
+        Yii::$app->session->addFlash('info', Yii::$app->request->hostInfo);
         return $this->render('index');
     }
 

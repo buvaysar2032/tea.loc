@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%news}}`.
+ * Handles the creation of table `{{%main}}`.
  */
-class m241023_130900_create_main_tables extends Migration
+class m241024_111446_create_main_tables extends Migration
 {
     /**
      * {@inheritdoc}
@@ -74,10 +74,10 @@ class m241023_130900_create_main_tables extends Migration
             'name' => $this->string()->notNull(),
             'email' => $this->string()->notNull(),
             'message' => $this->text()->notNull(),
-            'created_at' => $this->integer(),
-            'updated_at ' => $this->integer(),
-            'moderation_status' => $this->integer()->notNull(),
-            'comment' => $this->string()
+            'created_at'=> $this->integer(),
+            'updated_at'=> $this->integer(),
+            'moderation_status' => $this->integer()->defaultValue(0),
+            'comment' => $this->string(),
         ]);
     }
 

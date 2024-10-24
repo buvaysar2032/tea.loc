@@ -4,12 +4,12 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\TeaCollections;
+use common\models\News;
 
 /**
- * TeaCollectionsSearch represents the model behind the search form of `common\models\CollectionController`.
+ * NewsSearch represents the model behind the search form of `common\models\News`.
  */
-class TeaCollectionsSearch extends TeaCollections
+class NewsSearch extends News
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class TeaCollectionsSearch extends TeaCollections
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['title', 'title_en', 'subtitle', 'subtitle_en', 'color', 'image'], 'safe'],
+            [['id', 'priority', 'date', 'status'], 'integer'],
+            [['title', 'title_en', 'description', 'description_en', 'text', 'text_en', 'image'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class TeaCollectionsSearch extends TeaCollections
      */
     public function search($params)
     {
-        $query = TeaCollections::find();
+        $query = News::find()->orderBy(['priority' => SORT_ASC]);
 
         // add conditions that should always apply here
 
@@ -59,13 +59,17 @@ class TeaCollectionsSearch extends TeaCollections
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'priority' => $this->priority,
+            'date' => $this->date,
+            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'title_en', $this->title_en])
-            ->andFilterWhere(['like', 'subtitle', $this->subtitle])
-            ->andFilterWhere(['like', 'subtitle_en', $this->subtitle_en])
-            ->andFilterWhere(['like', 'color', $this->color])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'description_en', $this->description_en])
+            ->andFilterWhere(['like', 'text', $this->text])
+            ->andFilterWhere(['like', 'text_en', $this->text_en])
             ->andFilterWhere(['like', 'image', $this->image]);
 
         return $dataProvider;

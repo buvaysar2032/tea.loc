@@ -2,25 +2,30 @@
 
 namespace common\models;
 
+use himiklab\sortablegrid\SortableGridBehavior;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
- * This is the model class for table "tea_collections".
+ * This is the model class for table "news".
  *
  * @property int $id
  * @property string $title
  * @property string $title_en
- * @property string|null $subtitle
- * @property string|null $subtitle_en
- * @property string|null $color
+ * @property int|null $priority
+ * @property int $date
+ * @property string|null $description
+ * @property string|null $description_en
+ * @property string|null $text
+ * @property string|null $text_en
  * @property string|null $image
- *
- * @property Tea[] $teas
+ * @property int $status
  */
-class TeaCollections extends \yii\db\ActiveRecord
+class News extends \yii\db\ActiveRecord
 {
+
+    const PUBLISHED_YES = 1;
+    const PUBLISHED_NO = 0;
     public UploadedFile|string|null $imageFile = null;
 
     /**
@@ -28,7 +33,7 @@ class TeaCollections extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tea_collections';
+        return 'news';
     }
 
     /**
@@ -37,9 +42,10 @@ class TeaCollections extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'title_en'], 'required'],
-            [['subtitle', 'subtitle_en'], 'string'],
-            [['title', 'title_en', 'color', 'image'], 'string', 'max' => 255],
+            [['title', 'title_en', 'date'], 'required'],
+            [['priority', 'date', 'status'], 'integer'],
+            [['description', 'description_en', 'text', 'text_en'], 'string'],
+            [['title', 'title_en', 'image'], 'string', 'max' => 255],
         ];
     }
 
@@ -52,22 +58,16 @@ class TeaCollections extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'title_en' => Yii::t('app', 'Title En'),
-            'subtitle' => Yii::t('app', 'Subtitle'),
-            'subtitle_en' => Yii::t('app', 'Subtitle En'),
-            'color' => Yii::t('app', 'Color'),
+            'priority' => Yii::t('app', 'Priority'),
+            'date' => Yii::t('app', 'Date'),
+            'description' => Yii::t('app', 'Description'),
+            'description_en' => Yii::t('app', 'Description En'),
+            'text' => Yii::t('app', 'Text'),
+            'text_en' => Yii::t('app', 'Text En'),
             'image' => Yii::t('app', 'Image'),
+            'status' => Yii::t('app', 'Status'),
             'imageFile' => Yii::t('app', 'Image'),
         ];
-    }
-
-    /**
-     * Gets query for [[Teas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTeas()
-    {
-        return $this->hasMany(Tea::class, ['tea_collection_id' => 'id']);
     }
 
     public function beforeValidate(): bool
@@ -110,7 +110,32 @@ class TeaCollections extends \yii\db\ActiveRecord
         return null;
     }
 
-    public static function getList() {
-        return ArrayHelper::map(self::find()->all(), 'id', 'title');
+    public static function getList(): array
+    {
+        return [
+            self::PUBLISHED_YES => 'Опубликовано',
+            self::PUBLISHED_NO => 'Скрыто'
+        ];
+    }
+
+    public function getStatusName(): string
+    {
+        $statusLabels = self::getList();
+
+        if (isset($statusLabels[$this->status])) {
+            return $statusLabels[$this->status];
+        } else {
+            return Yii::t('app', 'Неизвестный статус');
+        }
+    }
+
+    public function behaviors()
+    {
+        return [
+            'sort' => [
+                'class' => SortableGridBehavior::class,
+                'sortableAttribute' => 'priority'
+            ],
+        ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Tea;
+use himiklab\sortablegrid\SortableGridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -23,18 +24,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
+    <?= SortableGridView::widget([
+        'sortableAction' => Url::toRoute(['sort']),
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'tea_collection_id',
+            [
+                'attribute' => 'tea_collection_id',
+                'label' => Yii::t('app', 'Коллекция чая'),
+                'value' => function (Tea $model) {
+                    return $model->getCategoryName();
+                },
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\TeaCollections::find()->all(), 'id', 'title'),
+                'contentOptions' => ['style' => 'width: 200px;'],
+            ],
             'title',
             'title_en',
             'subtitle:ntext',
-            //'subtitle_en:ntext',
+            'subtitle_en:ntext',
             //'description:ntext',
             //'description_en:ntext',
             //'background_image',

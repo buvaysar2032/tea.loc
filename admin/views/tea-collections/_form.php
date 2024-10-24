@@ -1,6 +1,7 @@
 <?php
 
 use kartik\color\ColorInput;
+use vova07\imperavi\Widget;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -13,22 +14,31 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col">
+            <?= $form->field($model, 'title_en')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'title_en')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col">
+            <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col">
+            <?= $form->field($model, 'subtitle_en')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'subtitle')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'subtitle_en')->textarea(['rows' => 6]) ?>
-
-    <br>
     <?php
     echo $form->field($model, 'color')->widget(ColorInput::classname(), [
         'options' => ['placeholder' => 'Select color ...'],
     ]);
     ?>
-    <br>
 
+    <br>
     <?= $form->field($model, 'imageFile')->fileInput(['maxlength' => true]) ?>
     <br>
 

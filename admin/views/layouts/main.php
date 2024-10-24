@@ -56,6 +56,8 @@ FontAwesomeAsset::register($this);
                     ['label' => 'Тексты', 'url' => ['/text']],
                     ['label' => 'Коллекции чая', 'url' => ['/tea-collections']],
                     ['label' => 'Чай', 'url' => ['/tea']],
+                    ['label' => 'Новости', 'url' => ['/news']],
+                    ['label' => 'Обратная связь', 'url' => ['/feedback']],
                 ]
             ],
             [

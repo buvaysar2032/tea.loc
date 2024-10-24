@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use himiklab\sortablegrid\SortableGridBehavior;
 use Yii;
 use yii\web\UploadedFile;
 
@@ -87,6 +88,9 @@ class Tea extends \yii\db\ActiveRecord
             'link' => Yii::t('app', 'Link'),
             'link_en' => Yii::t('app', 'Link En'),
             'priority' => Yii::t('app', 'Priority'),
+            'imageFile' => Yii::t('app', 'Background Image'),
+            'imageFile2' => Yii::t('app', 'Stack Image'),
+            'imageFile3' => Yii::t('app', 'Stack Image En'),
         ];
     }
 
@@ -150,5 +154,20 @@ class Tea extends \yii\db\ActiveRecord
         }
 
         return null;
+    }
+
+    public function getCategoryName(): string
+    {
+        return $this->teaCollection->title;
+    }
+
+    public function behaviors()
+    {
+        return [
+            'sort' => [
+                'class' => SortableGridBehavior::class,
+                'sortableAttribute' => 'priority'
+            ],
+        ];
     }
 }

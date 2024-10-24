@@ -40,7 +40,7 @@ class TeaSearch extends Tea
      */
     public function search($params)
     {
-        $query = Tea::find();
+        $query = Tea::find()->orderBy(['priority' => SORT_ASC]);
 
         // add conditions that should always apply here
 

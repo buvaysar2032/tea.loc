@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TeaCollectionsController implements the CRUD actions for TeaCollections model.
+ * CollectionController implements the CRUD actions for CollectionController model.
  */
 class TeaCollectionsController extends Controller
 {
@@ -32,7 +32,7 @@ class TeaCollectionsController extends Controller
     }
 
     /**
-     * Lists all TeaCollections models.
+     * Lists all CollectionController models.
      *
      * @return string
      */
@@ -48,7 +48,7 @@ class TeaCollectionsController extends Controller
     }
 
     /**
-     * Displays a single TeaCollections model.
+     * Displays a single CollectionController model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,7 +61,7 @@ class TeaCollectionsController extends Controller
     }
 
     /**
-     * Creates a new TeaCollections model.
+     * Creates a new CollectionController model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
@@ -83,7 +83,7 @@ class TeaCollectionsController extends Controller
     }
 
     /**
-     * Updates an existing TeaCollections model.
+     * Updates an existing CollectionController model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class TeaCollectionsController extends Controller
     }
 
     /**
-     * Deletes an existing TeaCollections model.
+     * Deletes an existing CollectionController model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,7 +117,7 @@ class TeaCollectionsController extends Controller
     }
 
     /**
-     * Finds the TeaCollections model based on its primary key value.
+     * Finds the CollectionController model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
      * @return TeaCollections the loaded model
